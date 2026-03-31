@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tour 2026 · Pirineos</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--y:#FFD700;--bk:#0D0D0D;--g1:#1A1A1A;--g2:#252525;--g3:#353535;--w:#F0EFE8;--gn:#22C55E;--bl:#3B82F6;--or:#F97316}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--bk);color:var(--w);max-width:430px;margin:0 auto;min-height:100vh}
+
+/* HEADER */
+.hdr{background:var(--y);padding:12px 16px 9px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
+.hdr h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:19px;color:var(--bk);letter-spacing:1px;text-transform:uppercase;line-height:1}
+.hdr .sub{font-size:9px;font-weight:600;color:#444;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.hdr-r{text-align:right;font-size:10px;color:#333;font-weight:600}
+.hdr-r .cdn{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--bk);line-height:1;display:block}
+
+/* TABS */
+.tab{padding:13px 13px 78px;display:none}
+.tab.on{display:block}
+
+/* GRID STATS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.stat{background:var(--g2);border-radius:8px;padding:10px;text-align:center;border:1px solid var(--g3)}
+.stat .n{font-family:'Barlow Condensed',sans-serif;font-size:23px;font-weight:900;color:var(--y);line-height:1}
+.stat .l{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#777;margin-top:2px}
+
+/* HERO ETAPA */
+.hero{background:linear-gradient(135deg,#1a0e00,#2d1a00);border:1px solid var(--or);border-radius:12px;padding:15px;margin-bottom:10px}
+.hero .lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:4px}
+.hero .tit{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1.1}
+.hero .dte{font-size:12px;color:#bbb;margin-top:4px}
+.hero .box{background:rgba(0,0,0,.4);border-radius:6px;padding:8px 10px;font-size:12px;color:#ccc;margin-top:9px;line-height:1.7}
+
+/* CARD */
+.card{background:var(--g1);border-radius:12px;padding:13px;margin-bottom:10px;border:1px solid var(--g3)}
+.ctit{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--y);margin-bottom:9px}
+
+/* RUTA STEPS */
+.step{display:flex;gap:11px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--g3)}
+.step:last-child{border-bottom:none}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--y);flex-shrink:0;margin-top:5px}
+.dot.gn{background:var(--gn)}
+.dot.or{background:var(--or)}
+.stxt{font-size:13px;color:#ccc;line-height:1.5}
+.stxt strong{color:var(--w)}
+.sbadges{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap}
+.sb{font-size:11px;color:#aaa;background:var(--bk);border-radius:4px;padding:2px 7px}
+.sb b{color:var(--y)}
+
+/* INFO BOX */
+.ibox{border-radius:10px;padding:11px 13px;margin-bottom:10px}
+.ibox.bl{background:#0a1629;border:1px solid #1a3a6a}
+.ibox .ibtit{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;color:#60a5fa}
+.ibox .ibtxt{font-size:13px;color:#ccc;line-height:1.5}
+
+/* COLLAPSIBLE DÍAS */
+.dcard{background:var(--g2);border-radius:10px;margin-bottom:8px;overflow:hidden;border:1px solid var(--g3)}
+.dcard.tour{border-color:var(--y)}
+.dhdr{display:flex;align-items:center;gap:9px;padding:10px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.dfbox{background:var(--g3);border-radius:7px;padding:4px 7px;text-align:center;flex-shrink:0;min-width:42px}
+.dfbox .mes{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#888}
+.dfbox .nd{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:21px;color:var(--w);line-height:1}
+.dcard.tour .dfbox{background:#2a2000}
+.dcard.tour .dfbox .nd{color:var(--y)}
+.dcol{flex:1}
+.dwd{font-size:9px;color:#777;letter-spacing:1px;text-transform:uppercase}
+.dtit{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;line-height:1.1;margin-top:1px}
+.dico{font-size:20px;flex-shrink:0}
+.dchev{font-size:13px;color:#555;flex-shrink:0;transition:transform .2s}
+.dbody{display:none;padding:0 12px 12px;border-top:1px solid var(--g3)}
+.dbody.on{display:block}
+.dcard.open .dchev{transform:rotate(180deg)}
+.dbody p{font-size:13px;color:#ccc;line-height:1.6;padding-top:9px}
+
+/* TIPS */
+.tip{background:var(--bk);border-left:3px solid var(--y);border-radius:4px;padding:7px 10px;font-size:12px;color:#bbb;margin-top:7px;line-height:1.5}
+.tip strong{color:var(--y)}
+.tip.gn{border-color:var(--gn)}
+.tip.bl{border-color:var(--bl)}
+.tip.or{border-color:var(--or)}
+.tip a{color:#60a5fa;text-decoration:none}
+.tip a:active{opacity:.7}
+
+/* BICI CARDS */
+.bcard{background:var(--g2);border-radius:10px;margin-bottom:8px;overflow:hidden;border:1px solid var(--g3)}
+.bcard.tour{border-color:var(--y)}
+.bhdr{display:flex;align-items:center;padding:10px 12px;gap:9px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.bdia{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#666;min-width:40px}
+.btit{flex:1}
+.bnom{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;line-height:1}
+.bmeta{display:flex;gap:5px;margin-top:3px;flex-wrap:wrap}
+.badge{font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:12px}
+.bg-s{background:#0d2e0d;color:#5cdb5c;border:1px solid #1a5a1a}
+.bg-m{background:#0d1a2d;color:#60a5fa;border:1px solid #1a3a5c}
+.bg-t{background:#2a2000;color:var(--y);border:1px solid #4a3800}
+.bg-d{background:#1a1a1a;color:#888;border:1px solid #333}
+.bkm{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--y);flex-shrink:0}
+.bchev{font-size:13px;color:#555;flex-shrink:0;transition:transform .2s}
+.bbody{display:none;padding:0 12px 12px;border-top:1px solid var(--g3)}
+.bbody.on{display:block}
+.bcard.open .bchev{transform:rotate(180deg)}
+.s3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:9px 0}
+.s3b{background:var(--bk);border-radius:6px;padding:7px;text-align:center}
+.s3b .n{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--y);line-height:1}
+.s3b .l{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#777;margin-top:2px}
+.wbox{margin-top:9px;background:#0a1629;border:1px solid var(--bl);border-radius:7px;padding:7px 10px}
+.wbox .wlbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#60a5fa;margin-bottom:4px}
+.wbox input{width:100%;background:transparent;border:none;outline:none;font-size:11px;color:#aaa;font-family:monospace;cursor:text}
+
+/* OPCIONES */
+.opt{border-radius:8px;padding:10px 12px;margin-bottom:6px}
+.opt.or{background:#1a0e00;border:1px solid var(--or)}
+.opt.gn{background:#0a1a0a;border:1px solid var(--gn)}
+.opt .otit{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;margin-bottom:5px}
+.opt.or .otit{color:var(--or)}
+.opt.gn .otit{color:var(--gn)}
+.opt .otxt{font-size:12px;color:#ccc;line-height:1.5}
+
+/* PUERTOS */
+.pcard{background:var(--g2);border-radius:10px;margin-bottom:0;border:1px solid var(--g3)}
+.pcard.bl{border-color:var(--bl)}
+.pcard.tour{border-color:var(--y)}
+.phdr{display:flex;align-items:center;padding:11px 13px;gap:11px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.pico{width:40px;height:40px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:19px;background:var(--g3);flex-shrink:0}
+.pdatos{flex:1}
+.pnom{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;line-height:1}
+.psts{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
+.pst{font-size:11px;color:#aaa;background:var(--bk);border-radius:4px;padding:2px 6px}
+.pst b{color:var(--y)}
+.pchev{font-size:13px;color:#555;transition:transform .2s}
+.pdet{display:none;padding:8px 13px 12px;border-top:1px solid var(--g3);font-size:13px;color:#ccc;line-height:1.6}
+.pdet.on{display:block}
+.pcard.open .pchev{transform:rotate(180deg)}
+.pwrap{margin-bottom:8px;border-radius:10px;overflow:hidden;border:1px solid var(--g3)}
+.pwrap.bl{border-color:var(--bl)}
+.pwrap.tour{border-color:var(--y)}
+
+/* PRESUPUESTO */
+.prow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--g3);font-size:13px}
+.prow:last-child{border-bottom:none}
+.prow .pl{color:#ccc;flex:1;padding-right:8px}
+.prow .pv{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--y);white-space:nowrap}
+.ptot{background:var(--y);border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.ptot .tl{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--bk);text-transform:uppercase;letter-spacing:1px}
+.ptot .tn{font-family:'Barlow Condensed',sans-serif;font-size:25px;font-weight:900;color:var(--bk)}
+.irow{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--g3);font-size:13px}
+.irow:last-child{border-bottom:none}
+.irow .il{color:#888;min-width:78px;flex-shrink:0;font-size:11px}
+.irow .iv{color:var(--w);font-weight:500}
+
+/* CONSEJOS */
+.consejo{background:var(--g2);border-radius:8px;padding:11px 13px;margin-bottom:8px;display:flex;gap:9px;align-items:flex-start;border:1px solid var(--g3)}
+.cico{font-size:19px;flex-shrink:0}
+.ctxt{font-size:13px;line-height:1.5;color:#ccc}
+.ctit{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:var(--y);margin-bottom:2px}
+
+/* DIVIDERS */
+.sdiv{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#555;margin:13px 0 8px;display:flex;align-items:center;gap:8px}
+.sdiv::after{content:'';flex:1;height:1px;background:var(--g3)}
+
+/* BOTTOM NAV */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--g1);display:flex;border-top:2px solid var(--y);z-index:100}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 4px 8px;cursor:pointer;background:none;border:none;color:#555;-webkit-tap-highlight-color:transparent}
+.nb.on{color:var(--y)}
+.ni{font-size:17px;line-height:1}
+.nl{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-top:2px;font-weight:700}
+a.tel{color:var(--gn);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="sub">Guía de viaje · Pirineos 2026</div>
+    <h1>🚴 Tour de France</h1>
+  </div>
+  <div class="hdr-r">
+    <span class="cdn" id="cdn">—</span>
+    <span style="font-size:10px;letter-spacing:1px">DÍAS · SALIDA</span>
+  </div>
+</div>
+
+<!-- ══ INICIO ══ -->
+<div class="tab on" id="tab-inicio">
+
+  <div class="g2">
+    <div class="stat"><div class="n">3–10</div><div class="l">Julio 2026</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">personas</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">noches total</div></div>
+    <div class="stat"><div class="n">9 Jul</div><div class="l">Día del Tour</div></div>
+  </div>
+
+  <div class="hero">
+    <div class="lbl">⭐ La etapa del viaje · Etapa 6 Tour 2026</div>
+    <div class="tit">Pau → Gavarnie-Gèdre</div>
+    <div class="dte">📅 Jueves 9 de julio · Alta montaña</div>
+    <div class="box">
+      ⛰️ <strong>Col d'Aspin</strong> (1.489m) → <strong>Col du Tourmalet</strong> (2.115m, HC) → Llegada inédita en <strong>Gavarnie-Gèdre</strong> · Patrimonio UNESCO<br>
+      🏆 Primera gran batalla entre favoritos al maillot amarillo de la 113ª edición
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ctit">🗺️ Esquema del viaje · Ford Transit Custom</div>
+    <div class="step">
+      <div class="dot"></div>
+      <div class="stxt"><strong>Viernes 3 jul</strong> — Salida de Sevilla
+        <div class="sbadges"><div class="sb"><b>730 km</b></div><div class="sb"><b>~7h</b></div><div class="sb">vía Albacete · Guadalajara</div></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot"></div>
+      <div class="stxt"><strong>3–5 jul</strong> — Ibdes, Zaragoza <span style="color:#777;font-size:12px">(2 noches)</span>
+        <div class="sbadges"><div class="sb">Paraje La Vegatilla Apt. 4</div><div class="sb"><a href="tel:+34677776226" class="tel">📞 677 776 226</a></div></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot"></div>
+      <div class="stxt"><strong>Domingo 5 jul</strong> — Ibdes → Luz-Saint-Sauveur
+        <div class="sbadges"><div class="sb"><b>420 km</b></div><div class="sb"><b>~5,5h</b></div><div class="sb">vía Jaca · Somport</div></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot or"></div>
+      <div class="stxt"><strong>5–10 jul</strong> — Base Luz-Saint-Sauveur <span style="color:#777;font-size:12px">(5 noches)</span>
+        <div class="sbadges"><div class="sb">2 Rue Sainte-Barbe · Olivier</div><div class="sb"><a href="tel:+33770614989" class="tel">📞 +33 7 70 61 49 89</a></div><div class="sb" style="background:#2a2000;color:var(--y)">Tour: 9 jul</div></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot gn"></div>
+      <div class="stxt"><strong>Viernes 10 jul</strong> — Regreso a Sevilla
+        <div class="sbadges"><div class="sb"><b>~1.100 km</b></div><div class="sb"><b>~10–11h</b></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ibox bl">
+    <div class="ibtit">🚐 Vehículo · Ford Transit Custom 2022 · Diesel</div>
+    <div class="ibtxt">Viaje en furgoneta propia desde Sevilla. ~2.450 km totales. Todas las rutas ciclistas salen y llegan a Luz-Saint-Sauveur (radio máx. 50 km).</div>
+  </div>
+
+</div>
+
+<!-- ══ DÍAS ══ -->
+<div class="tab" id="tab-dias">
+  <div class="sdiv">Itinerario día a día · 3–10 julio</div>
+
+  <div class="dcard" id="dc1" onclick="togD('dc1')">
+    <div class="dhdr"><div class="dfbox"><div class="mes">JUL</div><div class="nd">3</div></div><div class="dcol"><div class="dwd">Viernes</div><div class="dtit">Sevilla → Ibdes</div></div><div class="dico">🚗</div><div class="dchev">▾</div></div>
+    <div class="dbody" id="db1">
+      <p>Gran jornada de carretera. Salida temprana para llegar con luz.</p>
+      <div class="tip or"><strong>📏 730 km · ~7h</strong> sin paradas. Salir antes de las 8h.</div>
+      <div class="tip"><strong>🛣️ Ruta:</strong> A-4 → A-43 → A-31 → A-3 → CM-2 → Z-374. GPS imprescindible en el tramo final hasta Ibdes.</div>
+      <div class="tip bl"><strong>📞 Ibdes:</strong> <a href="tel:+34677776226" class="tel">677 776 226</a> · Paraje La Vegatilla Apt. 4, 50236 Ibdes</div>
+    </div>
+  </div>
+
+  <div class="dcard" id="dc2" onclick="togD('dc2')">
+    <div class="dhdr"><div class="dfbox"><div class="mes">JUL</div><div class="nd">4</div></div><div class="dcol"><div class="dwd">Sábado</div><div class="dtit">Día en Ibdes</div></div><div class="dico">🌄</div><div class="dchev">▾</div></div>
+    <div class="dbody" id="db2">
+      <p>Descanso y exploración por la zona del Jalón aragonés.</p>
+      <div class="tip gn"><strong>🏔️ Barranco de la Hoz Seca</strong> — Cañón espectacular a pocos km. Ruta fácil con niños.</div>
+      <div class="tip"><strong>🏛️ Calatayud</strong> — A 20 min. Buenas tapas y menú del día.</div>
+      <div class="tip bl"><strong>📺 Tour:</strong> Etapa 1 en Barcelona — CRI por equipos (19,7 km). Seguir por TV.</div>
+    </div>
+  </div>
+
+  <div class="dcard" id="dc3" onclick="togD('dc3')">
+    <div class="dhdr"><div class="dfbox"><div class="mes">JUL</div><div class="nd">5</div></div><div class="dcol"><div class="dwd">Domingo</div><div class="dtit">Ibdes → Luz-Saint-Sauveur</div></div><div class="dico">🏔️</div><div class="dchev">▾</div></div>
+    <div class="dbody" id="db3">
+      <p>Cruzar los Pirineos por el Somport. Uno de los pasos más espectaculares de la cordillera.</p>
+      <div class="tip or"><strong>📏 420 km · ~5,5h</strong> · Huesca → Sabiñánigo → Jaca → Somport → Oloron → Lourdes → Luz-Saint-Sauveur</div>
+      <div class="tip"><strong>🏘️ Jaca</strong> — Parada perfecta para almorzar. Ciudad bonita a mitad de camino.</div>
+      <div class="tip gn"><strong>🚗 Puerto del Somport</strong> (1.632m) — 10 minutos de parada. Vistas espectaculares. Frontera histórica España-Francia.</div>
+      <div class="tip"><strong>🏠 Llegada:</strong> 2 Rue Sainte-Barbe, Luz-Saint-Sauveur · <a href="tel:+33770614989" class="tel">+33 7 70 61 49 89</a> · Anfitrión: Olivier</div>
+    </div>
+  </div>
+
+  <div class="dcard" id="dc4" onclick="togD('dc4')">
+    <div class="dhdr"><div class="dfbox"><div class="mes">JUL</div><div class="nd">6</div></div><div class="dcol"><div class="dwd">Lunes</div><div class="dtit">Activación · Barèges</div></div><div class="dico">🚴</div><div class="dchev">▾</div></div>
+    <div class="dbody" id="db4">
+      <p>Primera ruta en bici. Suave, para soltar piernas y reconocer el entorno.</p>
+      <div class="tip"><strong>🚴 Ruta:</strong> Luz → Barèges → Luz · 30–35 km · 400–500m desnivel · Intensidad suave</div>
+      <div class="tip gn"><strong>🎯 Objetivo:</strong> Recuperar piernas tras dos días de furgoneta. Reconocer las carreteras.</div>
+    </div>
+  </div>
+
+  <div class="dcard" id="dc5" onclick="togD('dc5')">
+    <div class="dhdr"><div class="dfbox"><div class="mes">JUL</div><div class="nd">7</div></div><div class="dcol"><div class="dwd">Martes</div><div class="dtit">Gavarnie + Lourdes</div></div><div class="dico">🌄</div><div class="dchev">▾</div></div>
+    <div class="dbody" id="db5">
+      <p>Día de excursiones sin bici. Mañana en Gavarnie, tarde en Lourdes.</p>
+      <div class="tip or"><strong>🏔️ Gavarnie</strong> — A 20 min en coche. Circo glaciar Patrimonio UNESCO. Paseo fácil desde el pueblo (5 km llanos). Cascada de 423m. Ideal con niños.</div>
+      <div class="tip"><strong>✝️ Lourdes</strong> — A 25 min. Gruta de Massabielle, santuario, ambiente único. Muy accesible.</div>
+      <div class="tip bl"><strong>📺 Tour:</strong> Etapa 5 Lannemezan → Pau (velocistas). Por TV.</div>
+    </div>
+  </div>
+
+  <div class="dcard" id="dc6" onclick="togD('dc6')">
+    <div class="dhdr"><div class="dfbox"><div class="mes">JUL</div><div class="nd">8</div></div><div class="dcol"><div class="dwd">Miércoles</div><div class="dtit">Descanso activo</div></div><div class="dico">🦵</div><div class="dchev">▾</div></div>
+    <div class="dbody" id="db6">
+      <p>Día tranquilo antes del gran evento. Piernas frescas para el jueves.</p>
+      <div class="tip gn"><strong>🚴 Op. rodaje:</strong> Luz → Pierrefitte-Nestalas → Luz · 25–30 km · 200m desnivel · Muy suave</div>
+      <div class="tip"><strong>🌄 Op. descanso:</strong> Paseo en familia. Parque Nacional de los Pirineos.</div>
+      <div class="tip or"><strong>⚠️ Esta noche:</strong> Preparar mochila. Decidir si el Tour se ve en el Tourmalet o en Gavarnie. Dormir temprano.</div>
+    </div>
+  </div>
+
+  <div class="dcard tour" id="dc7" onclick="togD('dc7')">
+    <div class="dhdr"><div class="dfbox"><div class="mes">JUL</div><div class="nd">9</div></div><div class="dcol"><div class="dwd">Jueves</div><div class="dtit">🏆 Día del Tour</div></div><div class="dico">⭐</div><div class="dchev">▾</div></div>
+    <div class="dbody" id="db7">
+      <p>Etapa 6: <strong>Pau → Col d'Aspin → Col du Tourmalet → Gavarnie-Gèdre</strong>.</p>
+      <div class="opt or" style="margin-top:10px">
+        <div class="otit">🔵 A · Tourmalet en bici · 38–42 km</div>
+        <div class="otxt">Salida 6:30h. Subir pedaleando hasta el punto elegido. 1.300m desnivel. Carretera cierra ~5h antes del pelotón. Experiencia única.</div>
+      </div>
+      <div class="opt gn" style="margin-top:6px">
+        <div class="otit">🟡 B · Final en Gavarnie · en coche</div>
+        <div class="otxt">Ir muy temprano a Gavarnie-Gèdre. Ver la llegada histórica (primera vez del Tour aquí). Más cómodo con el niño. La caravana publicitaria pasa 1–2h antes.</div>
+      </div>
+      <div class="tip bl"><strong>👶 Consejo familiar:</strong> La opción B es más cómoda para toda la familia. El ambiente de llegada de etapa es espectacular para los niños (regalos de la caravana).</div>
+    </div>
+  </div>
+
+  <div class="dcard" id="dc8" onclick="togD('dc8')">
+    <div class="dhdr"><div class="dfbox"><div class="mes">JUL</div><div class="nd">10</div></div><div class="dcol"><div class="dwd">Viernes</div><div class="dtit">Regreso a Sevilla</div></div><div class="dico">🏠</div><div class="dchev">▾</div></div>
+    <div class="dbody" id="db8">
+      <p>Check-out y gran jornada de vuelta.</p>
+      <div class="tip"><strong>🛣️ Luz → Sevilla:</strong> ~1.100 km · ~10–11h · Posible parada en Zaragoza o Lleida.</div>
+      <div class="tip gn"><strong>🛒 Antes de salir:</strong> Mercado de Luz o tiendas en Lourdes. Queso de los Pirineos, embutidos, vino de Madiran.</div>
+      <div class="tip or"><strong>⛽ Repostar en Francia</strong> antes de cruzar la frontera — el gasoil suele ser más caro en el lado español de los Pirineos.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ BICI ══ -->
+<div class="tab" id="tab-bici">
+  <div class="sdiv">Plan ciclista · 5 jornadas desde Luz</div>
+
+  <div class="bcard" id="bc1" onclick="togB('bc1')">
+    <div class="bhdr"><div class="bdia">6 Jul</div><div class="btit"><div class="bnom">Activación · Barèges</div><div class="bmeta"><span class="badge bg-s">Suave</span></div></div><div class="bkm">~32 km</div><div class="bchev">▾</div></div>
+    <div class="bbody" id="bb1">
+      <div class="s3"><div class="s3b"><div class="n">30–35</div><div class="l">km</div></div><div class="s3b"><div class="n">400–500</div><div class="l">m desn.</div></div><div class="s3b"><div class="n">Suave</div><div class="l">intensidad</div></div></div>
+      <div class="tip"><strong>🗺️</strong> Luz-Saint-Sauveur → Barèges → Luz · Carretera del Tourmalet hasta Barèges y vuelta</div>
+      <div class="tip gn"><strong>🎯 Objetivo:</strong> Soltar piernas. Conocer las carreteras. Sin agobios.</div>
+      <div class="wbox"><div class="wlbl">📍 Wikiloc · Rutas ciclistas desde Luz</div><input readonly value="es.wikiloc.com/rutas/ciclismo/francia/pirineos-centrales/luz-saint-sauveur" onclick="this.select()"></div>
+    </div>
+  </div>
+
+  <div class="bcard" id="bc2" onclick="togB('bc2')">
+    <div class="bhdr"><div class="bdia">7 Jul</div><div class="btit"><div class="bnom">Luz Ardiden</div><div class="bmeta"><span class="badge bg-m">Media</span></div></div><div class="bkm">28 km</div><div class="bchev">▾</div></div>
+    <div class="bbody" id="bb2">
+      <div class="s3"><div class="s3b"><div class="n">28</div><div class="l">km</div></div><div class="s3b"><div class="n">1.000</div><div class="l">m desn.</div></div><div class="s3b"><div class="n">1.715m</div><div class="l">cima</div></div></div>
+      <div class="tip"><strong>🗺️</strong> Luz → Luz Ardiden → Luz · 13,7 km subida a 7,4% de media</div>
+      <div class="tip bl"><strong>⛰️</strong> Final de etapa clásico del Tour. Vistas al Tourmalet. Bar en la cima con terraza.</div>
+      <div class="wbox"><div class="wlbl">📍 Wikiloc · Luz Ardiden desde Luz</div><input readonly value="es.wikiloc.com/rutas-ciclismo/subida-a-luz-ardiden-desde-luz-st-sauveur-4816269" onclick="this.select()"></div>
+    </div>
+  </div>
+
+  <div class="bcard" id="bc3" onclick="togB('bc3')">
+    <div class="bhdr"><div class="bdia">8 Jul</div><div class="btit"><div class="bnom">Col d'Aspin</div><div class="bmeta"><span class="badge bg-m">Media</span></div></div><div class="bkm">~46 km</div><div class="bchev">▾</div></div>
+    <div class="bbody" id="bb3">
+      <div class="s3"><div class="s3b"><div class="n">45–48</div><div class="l">km</div></div><div class="s3b"><div class="n">1.100–1.200</div><div class="l">m desn.</div></div><div class="s3b"><div class="n">1.489m</div><div class="l">cima</div></div></div>
+      <div class="tip"><strong>🗺️</strong> Luz → Col d'Aspin → Luz · 12 km subida a 6,5% de media</div>
+      <div class="tip or"><strong>⭐ Especial:</strong> El Tour pasa mañana por aquí (etapa 6). Subirlo hoy te da perspectiva para elegir el mejor punto de visión.</div>
+      <div class="tip"><strong>🦌</strong> Muchos rebecos pirenaicos en la zona. Vistas al Tourmalet en la bajada.</div>
+      <div class="wbox"><div class="wlbl">📍 Wikiloc · Puertos míticos desde Luz</div><input readonly value="es.wikiloc.com/rutas-ciclismo/carretera-puertos-miticos-desde-luz-saint-sauveur-vol-1-53183371" onclick="this.select()"></div>
+    </div>
+  </div>
+
+  <div class="bcard" id="bc4" onclick="togB('bc4')">
+    <div class="bhdr"><div class="bdia">9 Jul</div><div class="btit"><div class="bnom">Descanso activo</div><div class="bmeta"><span class="badge bg-d">Opcional</span></div></div><div class="bkm">~27 km</div><div class="bchev">▾</div></div>
+    <div class="bbody" id="bb4">
+      <div class="s3"><div class="s3b"><div class="n">25–30</div><div class="l">km</div></div><div class="s3b"><div class="n">200</div><div class="l">m desn.</div></div><div class="s3b"><div class="n">Suave</div><div class="l">intensidad</div></div></div>
+      <div class="tip gn"><strong>🚴 Op. A:</strong> Luz → Pierrefitte-Nestalas → Luz. Solo para mantener el ritmo.</div>
+      <div class="tip"><strong>🌄 Op. B:</strong> Descanso total. Guardar piernas para mañana (Tour).</div>
+      <div class="tip or"><strong>⚠️ Esta noche:</strong> Preparar todo para el día del Tour. Decidir opción A o B del 10 jul.</div>
+      <div class="wbox"><div class="wlbl">📍 Wikiloc · Rutas ciclistas desde Luz</div><input readonly value="es.wikiloc.com/rutas/ciclismo/francia/pirineos-centrales/luz-saint-sauveur" onclick="this.select()"></div>
+    </div>
+  </div>
+
+  <div class="bcard tour" id="bc5" onclick="togB('bc5')">
+    <div class="bhdr"><div class="bdia">10 Jul</div><div class="btit"><div class="bnom">🏆 Día del Tour</div><div class="bmeta"><span class="badge bg-t">Tour Day</span></div></div><div class="bkm">~40 km</div><div class="bchev">▾</div></div>
+    <div class="bbody" id="bb5">
+      <div style="font-size:11px;color:#888;padding:9px 0 5px;font-family:'Barlow Condensed';font-weight:700;letter-spacing:1px;text-transform:uppercase">Elige cómo vivir la etapa</div>
+      <div class="opt or">
+        <div class="otit">🔵 A · Tourmalet en bici</div>
+        <div class="s3" style="margin:6px 0"><div class="s3b"><div class="n">38–42</div><div class="l">km</div></div><div class="s3b"><div class="n">1.300</div><div class="l">m desn.</div></div><div class="s3b"><div class="n">2.115m</div><div class="l">cima</div></div></div>
+        <div class="otxt">Salida 6:30h. Subir pedaleando. Elegir curva en los últimos 5 km. Carretera cierra ~5h antes del pelotón.</div>
+        <div class="wbox" onclick="event.stopPropagation()"><div class="wlbl">📍 Wikiloc · Col du Tourmalet desde Luz</div><input readonly value="es.wikiloc.com/rutas-ciclismo/col-du-tourmalet-desde-luz-saint-sauveur-19125204" onclick="this.select()"></div>
+      </div>
+      <div class="opt gn" style="margin-top:6px">
+        <div class="otit">🟡 B · Final en Gavarnie · coche</div>
+        <div class="s3" style="margin:6px 0"><div class="s3b"><div class="n">~20</div><div class="l">min coche</div></div><div class="s3b"><div class="n">1ª vez</div><div class="l">Tour aquí</div></div><div class="s3b"><div class="n">Familia</div><div class="l">friendly</div></div></div>
+        <div class="otxt">Llegada histórica en Gavarnie-Gèdre. Primera vez del Tour. Caravana publicitaria para los niños.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ PUERTOS ══ -->
+<div class="tab" id="tab-puertos">
+  <div class="sdiv">En el plan ciclista</div>
+
+  <div class="pwrap bl">
+    <div class="pcard bl" id="pp1" onclick="togP('pp1')">
+      <div class="phdr"><div class="pico">🚴</div><div class="pdatos"><div class="pnom">Luz Ardiden</div><div class="psts"><div class="pst"><b>1.715m</b></div><div class="pst"><b>HC</b></div><div class="pst"><b>7 jul</b></div><div class="pst"><b>13,7 km · 7,4%</b></div></div></div><div class="pchev">▾</div></div>
+    </div>
+    <div class="pdet" id="pd1">Final de etapa clásico del Tour. Subida desde Argelès-Gazost. Vistas espectaculares hacia el Tourmalet. Ambiente tranquilo fuera de temporada de nieve.</div>
+  </div>
+
+  <div class="pwrap bl">
+    <div class="pcard bl" id="pp2" onclick="togP('pp2')">
+      <div class="phdr"><div class="pico">⛰️</div><div class="pdatos"><div class="pnom">Col d'Aspin</div><div class="psts"><div class="pst"><b>1.489m</b></div><div class="pst"><b>Cat.1</b></div><div class="pst"><b>8 jul + Tour 9 jul</b></div><div class="pst"><b>12 km · 6,5%</b></div></div></div><div class="pchev">▾</div></div>
+    </div>
+    <div class="pdet" id="pd2">Previo al Tourmalet en la etapa 6. Bonito y accesible. Rebecos pirenaicos. Vistas al Tourmalet en la bajada. Subirlo el día antes permite elegir el mejor punto para ver el Tour.</div>
+  </div>
+
+  <div class="sdiv">El puerto del Tour</div>
+
+  <div class="pwrap tour">
+    <div class="pcard tour" id="pp3" onclick="togP('pp3')">
+      <div class="phdr"><div class="pico">🏆</div><div class="pdatos"><div class="pnom">Col du Tourmalet</div><div class="psts"><div class="pst"><b>2.115m</b></div><div class="pst"><b>HC</b></div><div class="pst" style="background:#2a2000;color:var(--y)"><b>Tour 9 jul</b></div><div class="pst"><b>18,9 km · 7,4%</b></div></div></div><div class="pchev">▾</div></div>
+    </div>
+    <div class="pdet" id="pd3" style="background:#1a0e00">El Géant des Pyrénées. En el Tour desde 1910. En la cima: bar, restaurante y la estatua de Octave Lapize (primer ganador, 1910). La carretera cierra el 9 de julio desde el mediodía aproximadamente.</div>
+  </div>
+
+  <div class="sdiv">Otros disponibles en la zona</div>
+
+  <div class="pwrap">
+    <div class="pcard" id="pp4" onclick="togP('pp4')">
+      <div class="phdr"><div class="pico">🏔️</div><div class="pdatos"><div class="pnom">Hautacam</div><div class="psts"><div class="pst"><b>1.520m</b></div><div class="pst"><b>HC</b></div><div class="pst"><b>13,5 km · 7,8%</b></div></div></div><div class="pchev">▾</div></div>
+    </div>
+    <div class="pdet" id="pd4">Final de etapa histórico del Tour. Muy duro en los últimos 3 km. Desde Argelès-Gazost (~20 km de Luz). Buenas vistas al Pic du Midi.</div>
+  </div>
+
+  <div class="pwrap">
+    <div class="pcard" id="pp5" onclick="togP('pp5')">
+      <div class="phdr"><div class="pico">⛰️</div><div class="pdatos"><div class="pnom">Col d'Aubisque</div><div class="psts"><div class="pst"><b>1.709m</b></div><div class="pst"><b>HC</b></div><div class="pst"><b>30 km · 4,8% desde Argèles</b></div></div></div><div class="pchev">▾</div></div>
+    </div>
+    <div class="pdet" id="pd5">Puerto escénico. Pasa por el Col du Soulor. Rebecos pirenaicos habituales. Más tiempo de ruta pero menos exigente. Paisaje espectacular entre los dos cols.</div>
+  </div>
+
+  <div class="pwrap">
+    <div class="pcard" id="pp6" onclick="togP('pp6')">
+      <div class="phdr"><div class="pico">⛰️</div><div class="pdatos"><div class="pnom">Col du Soulor</div><div class="psts"><div class="pst"><b>1.474m</b></div><div class="pst"><b>Cat.1</b></div><div class="pst"><b>11,8 km · 7,3%</b></div></div></div><div class="pchev">▾</div></div>
+    </div>
+    <div class="pdet" id="pd6">Se sube en el camino al Aubisque. Puerto más accesible. Bonitas vistas. Buena opción para días de menos energía.</div>
+  </div>
+
+</div>
+
+<!-- ══ PRESUPUESTO ══ -->
+<div class="tab" id="tab-pres">
+  <div class="card">
+    <div class="ctit">💰 Estimación económica · Transit Custom Diesel</div>
+    <div class="prow"><div class="pl">⛽ Combustible (~2.450 km · ~7,5L/100km)</div><div class="pv">260–290 €</div></div>
+    <div class="prow"><div class="pl">🅿️ Peajes (estimado)</div><div class="pv">30–50 €</div></div>
+    <div class="prow"><div class="pl">🏠 Ibdes (2 noches)</div><div class="pv">100–160 €</div></div>
+    <div class="prow"><div class="pl">🏠 Luz-Saint-Sauveur (5 noches)</div><div class="pv">300–500 €</div></div>
+    <div class="prow"><div class="pl">🍽️ Comida (8 días × 40–45€)</div><div class="pv">280–360 €</div></div>
+    <div class="prow"><div class="pl">🎟️ Entradas / actividades</div><div class="pv">30–60 €</div></div>
+    <div class="prow"><div class="pl">🛒 Extras y souvenirs</div><div class="pv">30–60 €</div></div>
+    <div class="ptot"><span class="tl">Total estimado</span><span class="tn">1.030–1.480 €</span></div>
+    <div class="tip" style="margin-top:10px">Sin vuelos ni coche de alquiler. La furgoneta permite llevar la bici sin alquiler. El consumo está calculado para ~2.450 km totales (ida, estancia y vuelta a Sevilla).</div>
+  </div>
+
+
+</div>
+
+<!-- ══ TIPS ══ -->
+<div class="tab" id="tab-tips">
+  <div class="sdiv">Día del Tour · 9 julio</div>
+
+  <div class="consejo"><div class="cico">⏰</div><div class="ctxt"><div class="ctit">Madrugar es obligatorio</div>Carreteras cerradas 4–5h antes del pelotón. Si el Tour llega al Tourmalet ~16h, hay que estar en posición antes de las 11h. Salida de la base a las 6:30h máximo.</div></div>
+  <div class="consejo"><div class="cico">🎒</div><div class="ctxt"><div class="ctit">Mochila del día de Tour</div>Agua (2–3 litros), bocadillos, fruta, protección solar, chubasquero, ropa de abrigo (en el Tourmalet 10–15°C aunque en el valle haga 30°C), cargador portátil, manta o silla plegable.</div></div>
+  <div class="consejo"><div class="cico">📍</div><div class="ctxt"><div class="ctit">Mejor punto para ver el pelotón</div>Curvas cerradas de los últimos 3–5 km del Tourmalet. Los ciclistas van más despacio y hay tiempo para fotos. Subir el Aspin el día 8 permite elegir el punto el día antes.</div></div>
+  <div class="consejo"><div class="cico">🎪</div><div class="ctxt"><div class="ctit">La caravana publicitaria</div>Pasa 1–2 horas ANTES del pelotón y reparte regalos (gorras, bidones, snacks, llaveros). A los niños les encanta. No perdérsela: es media fiesta del día.</div></div>
+  <div class="consejo"><div class="cico">📱</div><div class="ctxt"><div class="ctit">App oficial del Tour</div>Descargar la app del Tour de France: muestra la posición del pelotón en tiempo real. Fundamental para saber cuándo llegan. La cobertura en los puertos es irregular — anticipar.</div></div>
+
+  <div class="sdiv">Logística general</div>
+
+  <div class="consejo"><div class="cico">⛽</div><div class="ctxt"><div class="ctit">Gasolineras</div>En Luz-Saint-Sauveur y en Lourdes. Llenar siempre en el valle antes de subir. En los puertos no hay nada. Repostar en Francia antes de cruzar de vuelta a España.</div></div>
+  <div class="consejo"><div class="cico">💶</div><div class="ctxt"><div class="ctit">Efectivo en Francia</div>Los bares y refugios de montaña no siempre aceptan tarjeta. Llevar 50–80€ en efectivo para los días de bici. En Luz hay cajero automático.</div></div>
+  <div class="consejo"><div class="cico">🗣️</div><div class="ctxt"><div class="ctit">Francés básico útil</div><em>"Où passe le Tour ici?"</em> · <em>"La route est-elle fermée?"</em> · <em>"Un café allongé, s'il vous plaît"</em> · <em>"C'est combien?"</em><br>En los Pirineos muchos entienden castellano.</div></div>
+  <div class="consejo"><div class="cico">🌡️</div><div class="ctxt"><div class="ctit">Temperatura en los puertos</div>En el Tourmalet y Luz Ardiden llevar siempre capas. En la cima puede hacer 10–15°C con viento aunque en Luz haga 28°C. La bajada en bici es larga y con frío.</div></div>
+  <div class="consejo"><div class="cico">🚐</div><div class="ctxt"><div class="ctit">Aparcar la furgoneta</div>La Transit no cabe en todos los aparcamientos de montaña. Llegar muy temprano los días de bici para asegurar plaza. En el día del Tour, aparcar en el valle y subir pedaleando (op. A) o ir muy temprano a Gavarnie (op. B).</div></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nb on" onclick="showTab('inicio',this)"><div class="ni">🏠</div><div class="nl">Inicio</div></button>
+  <button class="nb" onclick="showTab('dias',this)"><div class="ni">📅</div><div class="nl">Días</div></button>
+  <button class="nb" onclick="showTab('bici',this)"><div class="ni">🚴</div><div class="nl">Bici</div></button>
+  <button class="nb" onclick="showTab('puertos',this)"><div class="ni">⛰️</div><div class="nl">Puertos</div></button>
+  <button class="nb" onclick="showTab('pres',this)"><div class="ni">💰</div><div class="nl">€€€</div></button>
+  <button class="nb" onclick="showTab('tips',this)"><div class="ni">💡</div><div class="nl">Tips</div></button>
+</nav>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
+  document.getElementById('tab-' + id).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo(0, 0);
+}
+function togD(id) {
+  var c = document.getElementById(id);
+  var b = document.getElementById('db' + id.replace('dc',''));
+  c.classList.toggle('open');
+  b.classList.toggle('on');
+}
+function togB(id) {
+  var c = document.getElementById(id);
+  var b = document.getElementById('bb' + id.replace('bc',''));
+  c.classList.toggle('open');
+  b.classList.toggle('on');
+}
+function cpUrl(url, id, lbl) {
+  var el = document.getElementById(id);
+  navigator.clipboard.writeText(url).then(function() {
+    el.textContent = '✓ Copiado — pega en el navegador';
+    el.classList.add('ok');
+    setTimeout(function(){ el.textContent = lbl; el.classList.remove('ok'); }, 2500);
+  }).catch(function() {
+    prompt('Copia este enlace:', url);
+  });
+}
+function togP(id) {
+  var c = document.getElementById(id);
+  var b = document.getElementById('pd' + id.replace('pp',''));
+  c.classList.toggle('open');
+  b.classList.toggle('on');
+}
+(function() {
+  var salida = new Date('2026-07-03T00:00:00');
+  var hoy = new Date();
+  var diff = Math.ceil((salida - hoy) / 864e5);
+  var el = document.getElementById('cdn');
+  if (el) el.textContent = diff > 0 ? diff : (diff === 0 ? '¡HOY!' : '✓');
+})();
+</script>
+</body>
+</html>
